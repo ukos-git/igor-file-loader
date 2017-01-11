@@ -1,0 +1,50 @@
+#pragma TextEncoding = "UTF-8"
+#pragma rtGlobals = 3
+
+// require these files
+// #include "FILOstructure"
+// #include "FILOprefs"
+// #include "FILOtools"
+
+strConstant cFILOpackage    = "FILO"
+Constant    cFILOversion = 0001
+StrConstant cFILOpath   = "X:Documents:RAW:"
+
+Function FILOload([fileType])
+    String fileType
+
+	String fullPath, files
+
+	STRUCT FILOpackage package
+	STRUCT FILOexperiment filo
+
+	LoadPackagePrefs(package)
+	FILOstructureLoad(filo)
+	
+    if(ParamIsDefault(fileType))
+        fileType = ".ibw"
+    endif
+
+	fullPath = FILOpopUpChooseDirectory(package.path)
+	files = PathActionGetFileList(fullPath, fileType)
+	
+	filo.strFolder   = fullPath
+	filo.strFileList = files
+    filo.strFileExtension = fileType
+
+	package.path = filo.strFolder	
+	SavePackagePrefs(package)
+	FILOstructureSave(filo)
+End
+
+static Function/S PathActionGetFileList(strFolder, strExtension)
+	String strFolder, strExtension
+
+	String listFiles
+
+	NewPath/Q/O path strFolder
+	listFiles = IndexedFile(path, -1, strExtension)
+	listFiles = SortList(listFiles,";",16)
+
+	return listFiles
+End
