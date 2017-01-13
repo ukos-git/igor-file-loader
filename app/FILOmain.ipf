@@ -10,20 +10,24 @@ strConstant cFILOpackage    = "FILO"
 Constant    cFILOversion = 0001
 StrConstant cFILOpath   = "X:Documents:RAW:"
 
-Function FILOload([fileType])
+Function FILOload([fileType, packageID])
     String fileType
+    Variable packageID
 
 	String fullPath, files
 
 	STRUCT FILOpackage package
 	STRUCT FILOexperiment filo
 
-	LoadPackagePrefs(package)
-	FILOstructureLoad(filo)
-	
+    if(ParamIsDefault(packageID))
+        packageID = 0
+    endif
     if(ParamIsDefault(fileType))
         fileType = ".ibw"
     endif
+
+	LoadPackagePrefs(package, id = packageID)
+	FILOstructureLoad(filo)
 
 	fullPath = FILOpopUpChooseDirectory(package.path)
 	files = PathActionGetFileList(fullPath, fileType)
@@ -33,7 +37,7 @@ Function FILOload([fileType])
     filo.strFileExtension = fileType
 
 	package.path = filo.strFolder	
-	SavePackagePrefs(package)
+	SavePackagePrefs(package, id = packageID)
 	FILOstructureSave(filo)
 End
 

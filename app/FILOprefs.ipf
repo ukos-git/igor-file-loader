@@ -44,11 +44,15 @@ static Function SyncPackagePrefs(package)
 	package.version = cFILOversion
 End
 
-Function LoadPackagePrefs(package)
+Function LoadPackagePrefs(package, [id])
 	STRUCT FILOpackage &package
+    Variable id
 
+    if(ParamIsDefault(id))
+        id = cnumPrefsRecordID
+    endif
 
-	LoadPackagePreferences cstrPackageName, cstrPreferencesFileName, cnumPrefsRecordID, package	
+	LoadPackagePreferences cstrPackageName, cstrPreferencesFileName, id, package	
 	if (V_flag != 0 || V_bytesRead == 0)	
 		print "LoadPackagePrefs: Package not initialized"
 		DefaultPackagePrefs(package)
@@ -63,11 +67,16 @@ Function LoadPackagePrefs(package)
 	endif
 End
 
-Function SavePackagePrefs(package)
+Function SavePackagePrefs(package, [id])
 	STRUCT FILOpackage &package
+    Variable id
+
+    if(ParamIsDefault(id))
+        id = cnumPrefsRecordID
+    endif
 
 	SyncPackagePrefs(package)
-	SavePackagePreferences cstrPackageName, cstrPreferencesFileName, cnumPrefsRecordID, package
+	SavePackagePreferences cstrPackageName, cstrPreferencesFileName, id, package
 End
 
 // Used to test SavePackagePreferences /KILL flag added in Igor Pro 6.10B04.
