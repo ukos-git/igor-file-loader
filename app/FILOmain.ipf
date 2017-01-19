@@ -28,16 +28,19 @@ Function load([fileType, packageID])
     endif
 
 	LoadPackagePrefs(package, id = packageID)
-	structureLoad(filo)
 
 	fullPath = popUpChooseDirectory(package.path)
 	files = pathActionGetFileList(fullPath, fileType)
 	
+	structureLoad(filo)
+
 	filo.strFolder   = fullPath
 	filo.strFileList = files
     filo.strFileExtension = fileType
 
-	package.path = filo.strFolder	
-	SavePackagePrefs(package, id = packageID)
 	structureSave(filo)
+
+	package.path = filo.strFolder	
+
+	SavePackagePrefs(package, id = packageID)
 End
