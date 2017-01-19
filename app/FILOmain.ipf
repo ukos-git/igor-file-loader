@@ -9,7 +9,7 @@
 
 strConstant cpackage    = "FILO"
 Constant    cversion = 0001
-StrConstant cpath   = "X:Documents:RAW:"
+StrConstant cpath    = "C:"
 
 Function load([fileType, packageID])
     String fileType
