@@ -31,7 +31,7 @@ Function load([fileType, packageID])
 	structureLoad(filo)
 
 	fullPath = popUpChooseDirectory(package.path)
-	files = PathActionGetFileList(fullPath, fileType)
+	files = pathActionGetFileList(fullPath, fileType)
 	
 	filo.strFolder   = fullPath
 	filo.strFileList = files
@@ -40,16 +40,4 @@ Function load([fileType, packageID])
 	package.path = filo.strFolder	
 	SavePackagePrefs(package, id = packageID)
 	structureSave(filo)
-End
-
-static Function/S PathActionGetFileList(strFolder, strExtension)
-	String strFolder, strExtension
-
-	String listFiles
-
-	NewPath/Q/O path strFolder
-	listFiles = IndexedFile(path, -1, strExtension)
-	listFiles = SortList(listFiles,";",16)
-
-	return listFiles
 End

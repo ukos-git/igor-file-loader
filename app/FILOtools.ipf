@@ -20,6 +20,18 @@ Function/S popUpChooseDirectory(strPath)
     return strPath
 End
 
+Function/S pathActionGetFileList(strFolder, strExtension)
+	String strFolder, strExtension
+
+	String listFiles
+
+	NewPath/Q/O path strFolder
+	listFiles = IndexedFile(path, -1, strExtension)
+	listFiles = SortList(listFiles,";",16)
+
+	return listFiles
+End
+
 Function createSVAR(name, [dfr, set, init])
     String name
     DFREF dfr
