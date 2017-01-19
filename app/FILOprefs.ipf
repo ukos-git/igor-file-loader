@@ -1,5 +1,5 @@
 #pragma TextEncoding = "UTF-8"
-#pragma rtGlobals=3
+#pragma rtGlobals = 3
 
 static StrConstant cstrPackageName = "Generic File Loader Wrapper"
 static StrConstant cstrPreferencesFileName = "GenericFileLoader.bin"
