@@ -11,20 +11,20 @@ All files from the Igor Procedures Folder are loaded by default on program start
 # Usage
  ```
 Function load()
-    FILOload(fileType = ".ibw", packageID = 1)
+    FILO#load(fileType = ".ibw", packageID = 1)
 End
 
 Function read()
 	String file
 	Variable numFiles, i
-	STRUCT FILOexperiment filo
+	STRUCT FILO#experiment filos
 
-    FILOstructureLoad(filo)
+    FILO#structureLoad(filos)
 
-	numFiles = ItemsInList(filo.strFileList)
+	numFiles = ItemsInList(filos.strFileList)
 	for(i = 0; i < numFiles; i += 1)
-		file = StringFromList(i, filo.strFileList)
-		print filo.strFolder, file
+		file = StringFromList(i, filos.strFileList)
+		print filos.strFolder, file
 	endfor
 End
 ```

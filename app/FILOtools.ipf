@@ -1,7 +1,8 @@
 #pragma TextEncoding = "UTF-8"
 #pragma rtGlobals = 3
+#pragma IndependentModule = FILO
 
-Function/S FILOpopUpChooseDirectory(strPath)
+Function/S popUpChooseDirectory(strPath)
     String strPath
 
 	NewPath/O/Q path, strPath
@@ -19,7 +20,7 @@ Function/S FILOpopUpChooseDirectory(strPath)
     return strPath
 End
 
-Function FILOcreateSVAR(name, [dfr, set, init])
+Function createSVAR(name, [dfr, set, init])
     String name
     DFREF dfr
     String set, init
@@ -43,7 +44,7 @@ Function FILOcreateSVAR(name, [dfr, set, init])
     endif
 End
 
-Function/S FILOloadSVAR(name, [dfr])
+Function/S loadSVAR(name, [dfr])
     String name
     DFREF dfr
    
@@ -56,7 +57,7 @@ Function/S FILOloadSVAR(name, [dfr])
     return var
 End
 
-Function FILOsaveSVAR(name, set, [dfr])
+Function saveSVAR(name, set, [dfr])
     String name, set
     DFREF dfr
    
@@ -74,7 +75,7 @@ Function FILOsaveSVAR(name, set, [dfr])
     return 1
 End
 
-Function FILOsaveNVAR(name, set, [dfr])
+Function saveNVAR(name, set, [dfr])
     String name
     Variable set
     DFREF dfr
@@ -93,7 +94,7 @@ Function FILOsaveNVAR(name, set, [dfr])
     return 1
 End
 
-Function FILOcreateNVAR(name, [dfr, set])
+Function createNVAR(name, [dfr, set])
     String name
     DFREF dfr
     Variable set

@@ -1,9 +1,10 @@
 #pragma TextEncoding = "UTF-8"
 #pragma rtGlobals = 3
+#pragma IndependentModule = FILO
 
-static strConstant cFILOstructure    = "structure" // path for global var in filo Package dfr
+static strConstant cstructure    = "structure" // path for global var in filo Package dfr
 
-Structure FILOexperiment
+Structure experiment
 	String strFolder, strFileList, strFileExtension
 	Variable numVersion
 
@@ -12,7 +13,7 @@ Structure FILOexperiment
 EndStructure
 
 static Function/S StructureDF()
-    return "root:Packages:" + cFILOpackage + ":" + cFILOstructure
+    return "root:Packages:" + cpackage + ":" + cstructure
 End
 
 static Function StructureIsInit()
@@ -26,19 +27,19 @@ static Function StructureIsInit()
 End
 
 static Function StructureInitDF(filo)
-	Struct FILOexperiment &filo
+	Struct experiment &filo
 	DFREF dfrSave = GetDataFolderDFR()
 	
 	SetDataFolder root:
 	NewDataFolder/O/S Packages
-	NewDataFolder/O/S $cFILOpackage
-	NewDataFolder/O/S $cFILOstructure
+	NewDataFolder/O/S $cpackage
+	NewDataFolder/O/S $cstructure
 	
 	SetDataFolder dfrSave	
 End
 
 static Function StructureUpdate(filo)
-	Struct FILOexperiment &filo
+	Struct experiment &filo
 
     StructureInitGlobalVariables()
 End
@@ -46,14 +47,14 @@ End
 static Function StructureInitGlobalVariables()
 	DFREF dfrStructure = $StructureDF()
 
-    FILOcreateSVAR("strFileList", dfr = dfrStructure)
-    FILOcreateSVAR("strFileExtension", dfr = dfrStructure)
-    FILOcreateSVAR("strFolder",        dfr = dfrStructure, init = cFILOpath)
-    FILOcreateNVAR("numVersion", dfr = dfrStructure, set = cFILOversion)
+    createSVAR("strFileList", dfr = dfrStructure)
+    createSVAR("strFileExtension", dfr = dfrStructure)
+    createSVAR("strFolder",        dfr = dfrStructure, init = cpath)
+    createNVAR("numVersion", dfr = dfrStructure, set = cversion)
 End 
 
-Function FILOstructureLoad(filo)
-	Struct FILOexperiment &filo
+Function structureLoad(filo)
+	Struct experiment &filo
 	Variable SetDefault = 0
 	
 	if(!StructureIsInit())
@@ -63,31 +64,31 @@ Function FILOstructureLoad(filo)
 
 	DFREF filo.dfrStructure = $StructureDF()
     if (DataFolderRefStatus(filo.dfrStructure) == 0)
-        print "FILOstructureLoad: Unexpected Behaviour." // ASSERT
+        print "FILO#structureLoad: Unexpected Behaviour." // ASSERT
     endif
 
     NVAR/SDFR=filo.dfrStructure numVersion
-    if (numVersion < cFILOversion)
-        print "FILOstructureLoad: Version Change detected."
+    if (numVersion < cversion)
+        print "FILO#structureLoad: Version Change detected."
         printf "current Version:\t%04d\r", numVersion
         StructureUpdate(filo)
         printf "new Version:\t%04d\r", numVersion
     endif
     filo.numVersion = numVersion
     
-    filo.strFolder        = FILOloadSVAR("strFolder",        dfr = filo.dfrStructure)
-    filo.strFileList      = FILOloadSVAR("strFileList",      dfr = filo.dfrStructure)
-    filo.strFileExtension = FILOloadSVAR("strFileExtension", dfr = filo.dfrStructure)
+    filo.strFolder        = loadSVAR("strFolder",        dfr = filo.dfrStructure)
+    filo.strFileList      = loadSVAR("strFileList",      dfr = filo.dfrStructure)
+    filo.strFileExtension = loadSVAR("strFileExtension", dfr = filo.dfrStructure)
 End
 
-Function FILOstructureSave(filo)
-	Struct FILOexperiment &filo
+Function structureSave(filo)
+	Struct experiment &filo
 	
 	DFREF dfrStructure = $StructureDF()
 
-    FILOsaveSVAR("strFolder",        filo.strFolder,        dfr = dfrStructure)	
-    FILOsaveSVAR("strFileList",      filo.strFileList,      dfr = dfrStructure)	
-    FILOsaveSVAR("strFileExtension", filo.strFileExtension, dfr = dfrStructure)	
+    saveSVAR("strFolder",        filo.strFolder,        dfr = dfrStructure)	
+    saveSVAR("strFileList",      filo.strFileList,      dfr = dfrStructure)	
+    saveSVAR("strFileExtension", filo.strFileExtension, dfr = dfrStructure)	
 	
-    FILOsaveNVAR("numVersion", filo.numVersion, dfr = dfrStructure)	
+    saveNVAR("numVersion", filo.numVersion, dfr = dfrStructure)	
 End

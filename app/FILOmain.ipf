@@ -1,23 +1,24 @@
 #pragma TextEncoding = "UTF-8"
 #pragma rtGlobals = 3
+#pragma IndependentModule = FILO
 
 // require these files
 // #include "FILOstructure"
 // #include "FILOprefs"
 // #include "FILOtools"
 
-strConstant cFILOpackage    = "FILO"
-Constant    cFILOversion = 0001
-StrConstant cFILOpath   = "X:Documents:RAW:"
+strConstant cpackage    = "FILO"
+Constant    cversion = 0001
+StrConstant cpath   = "X:Documents:RAW:"
 
-Function FILOload([fileType, packageID])
+Function load([fileType, packageID])
     String fileType
     Variable packageID
 
 	String fullPath, files
 
-	STRUCT FILOpackage package
-	STRUCT FILOexperiment filo
+	STRUCT package package
+	STRUCT experiment filo
 
     if(ParamIsDefault(packageID))
         packageID = 0
@@ -27,9 +28,9 @@ Function FILOload([fileType, packageID])
     endif
 
 	LoadPackagePrefs(package, id = packageID)
-	FILOstructureLoad(filo)
+	structureLoad(filo)
 
-	fullPath = FILOpopUpChooseDirectory(package.path)
+	fullPath = popUpChooseDirectory(package.path)
 	files = PathActionGetFileList(fullPath, fileType)
 	
 	filo.strFolder   = fullPath
@@ -38,7 +39,7 @@ Function FILOload([fileType, packageID])
 
 	package.path = filo.strFolder	
 	SavePackagePrefs(package, id = packageID)
-	FILOstructureSave(filo)
+	structureSave(filo)
 End
 
 static Function/S PathActionGetFileList(strFolder, strExtension)

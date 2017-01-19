@@ -1,5 +1,6 @@
 #pragma TextEncoding = "UTF-8"
 #pragma rtGlobals = 3
+#pragma IndependentModule = FILO
 
 static StrConstant cstrPackageName = "Generic File Loader Wrapper"
 static StrConstant cstrPreferencesFileName = "GenericFileLoader.bin"
@@ -7,7 +8,7 @@ static StrConstant cstrPreferencesFileName = "GenericFileLoader.bin"
 static Constant cnumPrefsRecordID = 0 // The recordID is a unique number identifying a record within the preference file.
 
 
-Structure FILOpackage
+Structure package
 	double version
 	uchar  path[256]
 
@@ -18,7 +19,7 @@ Structure FILOpackage
 EndStructure
 
 static Function DefaultPackagePrefs(package)
-	STRUCT FILOpackage &package
+	STRUCT package &package
 
     Variable i
 
@@ -33,19 +34,19 @@ static Function DefaultPackagePrefs(package)
 End
 
 static Function ResetPackagePrefs(package)
-	STRUCT FILOpackage &package
+	STRUCT package &package
 
-	package.path    = cFILOpath
+	package.path    = cpath
 End
 
 static Function SyncPackagePrefs(package)
-	STRUCT FILOpackage &package
+	STRUCT package &package
 
-	package.version = cFILOversion
+	package.version = cversion
 End
 
 Function LoadPackagePrefs(package, [id])
-	STRUCT FILOpackage &package
+	STRUCT package &package
     Variable id
 
     if(ParamIsDefault(id))
@@ -54,21 +55,21 @@ Function LoadPackagePrefs(package, [id])
 
 	LoadPackagePreferences cstrPackageName, cstrPreferencesFileName, id, package	
 	if (V_flag != 0 || V_bytesRead == 0)	
-		print "LoadPackagePrefs: Package not initialized"
+		print "FILO#LoadPackagePrefs: Package not initialized"
 		DefaultPackagePrefs(package)
 	endif
 
-	if (package.version < cFILOversion)
-		print "LoadPackagePrefs: Version change detected: "
+	if (package.version < cversion)
+		print "FILO#LoadPackagePrefs: Version change detected: "
         printf "current Version:\t%04d\r", package.version
 		ResetPackagePrefs(package)
 		SavePackagePrefs(package)
-        printf "new Version:\t%04d\r", cFILOversion
+        printf "new Version:\t%04d\r", cversion
 	endif
 End
 
 Function SavePackagePrefs(package, [id])
-	STRUCT FILOpackage &package
+	STRUCT package &package
     Variable id
 
     if(ParamIsDefault(id))
@@ -81,7 +82,7 @@ End
 
 // Used to test SavePackagePreferences /KILL flag added in Igor Pro 6.10B04.
 Function KillPackagePrefs()
-	STRUCT FILOpackage prefs
+	STRUCT package prefs
 
 	SavePackagePreferences /KILL cstrPackageName, cstrPreferencesFileName, cnumPrefsRecordID, prefs
 End
