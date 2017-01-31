@@ -12,7 +12,7 @@ Structure package
     double version
     uchar  path[256]
 
-    // reserved for future use
+    // reserved forfuture use
     uchar  strReserved[256]
     double dblReserved[100]
     uint32 intReserved[100]
@@ -27,7 +27,7 @@ static Function DefaultPackagePrefs(package)
     package.strReserved = ""
     package.path = ""
 
-    for (i = 0; i < 100; i += 1)
+    for(i = 0; i < 100; i += 1)
         package.dblReserved[i] = 0
         package.intReserved[i] = 0
     endfor
@@ -36,7 +36,7 @@ End
 static Function ResetPackagePrefs(package)
     STRUCT package &package
 
-    package.path    = cpath
+    package.path = cpath
 End
 
 static Function SyncPackagePrefs(package)
@@ -54,12 +54,12 @@ Function LoadPackagePrefs(package, [id])
     endif
 
     LoadPackagePreferences cstrPackageName, cstrPreferencesFileName, id, package    
-    if (V_flag != 0 || V_bytesRead == 0)    
+    if(V_flag != 0 || V_bytesRead == 0)    
         print "FILO#LoadPackagePrefs: Package not initialized"
         DefaultPackagePrefs(package)
     endif
 
-    if (package.version < cversion)
+    if(package.version < cversion)
         print "FILO#LoadPackagePrefs: Version change detected: "
         printf "current Version:\t%04d\r", package.version
         ResetPackagePrefs(package)

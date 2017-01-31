@@ -13,7 +13,7 @@ Function/S popUpChooseDirectory(strPath)
     strPath = S_path
 
     GetFileFolderInfo/Q/Z=1 strPath
-    if (!V_isFolder)
+    if(!V_isFolder)
         strPath = ""
     endif
 

@@ -2,7 +2,7 @@
 #pragma rtGlobals = 3
 #pragma IndependentModule = FILO
 
-static strConstant cstructure    = "structure" // path for global var in filo Package dfr
+static strConstant cstructure    = "structure" // path forglobal var in filo Package dfr
 
 Structure experiment
     String strFolder, strFileList, strFileExtension
@@ -19,7 +19,7 @@ End
 static Function StructureIsInit()
     String strDataFolder = StructureDF()
 
-    if (!DataFolderExists(strDataFolder))
+    if(!DataFolderExists(strDataFolder))
         return 0
     endif
 
@@ -63,12 +63,12 @@ Function structureLoad(filo)
     endif
 
     DFREF filo.dfrStructure = $StructureDF()
-    if (DataFolderRefStatus(filo.dfrStructure) == 0)
+    if(DataFolderRefStatus(filo.dfrStructure) == 0)
         print "FILO#structureLoad: Unexpected Behaviour." // ASSERT
     endif
 
     NVAR/SDFR=filo.dfrStructure numVersion
-    if (numVersion < cversion)
+    if(numVersion < cversion)
         print "FILO#structureLoad: Version Change detected."
         printf "current Version:\t%04d\r", numVersion
         StructureUpdate(filo)
