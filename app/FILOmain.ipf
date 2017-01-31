@@ -15,10 +15,10 @@ Function load([fileType, packageID])
     String fileType
     Variable packageID
 
-	String fullPath, files
+    String fullPath, files
 
-	STRUCT package package
-	STRUCT experiment filo
+    STRUCT package package
+    STRUCT experiment filo
 
     if(ParamIsDefault(packageID))
         packageID = 0
@@ -27,20 +27,20 @@ Function load([fileType, packageID])
         fileType = ".ibw"
     endif
 
-	LoadPackagePrefs(package, id = packageID)
+    LoadPackagePrefs(package, id = packageID)
 
-	fullPath = popUpChooseDirectory(package.path)
-	files = pathActionGetFileList(fullPath, fileType)
-	
-	structureLoad(filo)
+    fullPath = popUpChooseDirectory(package.path)
+    files = pathActionGetFileList(fullPath, fileType)
+    
+    structureLoad(filo)
 
-	filo.strFolder   = fullPath
-	filo.strFileList = files
+    filo.strFolder   = fullPath
+    filo.strFileList = files
     filo.strFileExtension = fileType
 
-	structureSave(filo)
+    structureSave(filo)
 
-	package.path = filo.strFolder	
+    package.path = filo.strFolder    
 
-	SavePackagePrefs(package, id = packageID)
+    SavePackagePrefs(package, id = packageID)
 End

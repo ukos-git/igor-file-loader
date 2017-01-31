@@ -5,31 +5,31 @@
 Function/S popUpChooseDirectory(strPath)
     String strPath
 
-	NewPath/O/Q path, strPath
-	PathInfo/S path
+    NewPath/O/Q path, strPath
+    PathInfo/S path
 
-	NewPath/M="choose Folder"/O/Q path
-	PathInfo path
-	strPath = S_path
+    NewPath/M="choose Folder"/O/Q path
+    PathInfo path
+    strPath = S_path
 
-	GetFileFolderInfo/Q/Z=1 strPath
-	if (!V_isFolder)
-		strPath = ""
-	endif
+    GetFileFolderInfo/Q/Z=1 strPath
+    if (!V_isFolder)
+        strPath = ""
+    endif
 
     return strPath
 End
 
 Function/S pathActionGetFileList(strFolder, strExtension)
-	String strFolder, strExtension
+    String strFolder, strExtension
 
-	String listFiles
+    String listFiles
 
-	NewPath/Q/O path strFolder
-	listFiles = IndexedFile(path, -1, strExtension)
-	listFiles = SortList(listFiles,";",16)
+    NewPath/Q/O path strFolder
+    listFiles = IndexedFile(path, -1, strExtension)
+    listFiles = SortList(listFiles,";",16)
 
-	return listFiles
+    return listFiles
 End
 
 Function createSVAR(name, [dfr, set, init])

@@ -5,11 +5,11 @@
 static strConstant cstructure    = "structure" // path for global var in filo Package dfr
 
 Structure experiment
-	String strFolder, strFileList, strFileExtension
-	Variable numVersion
+    String strFolder, strFileList, strFileExtension
+    Variable numVersion
 
-	DFREF dfrPackage
-	DFREF dfrStructure
+    DFREF dfrPackage
+    DFREF dfrStructure
 EndStructure
 
 static Function/S StructureDF()
@@ -19,7 +19,7 @@ End
 static Function StructureIsInit()
     String strDataFolder = StructureDF()
 
-	if (!DataFolderExists(strDataFolder))
+    if (!DataFolderExists(strDataFolder))
         return 0
     endif
 
@@ -27,25 +27,25 @@ static Function StructureIsInit()
 End
 
 static Function StructureInitDF(filo)
-	Struct experiment &filo
-	DFREF dfrSave = GetDataFolderDFR()
-	
-	SetDataFolder root:
-	NewDataFolder/O/S Packages
-	NewDataFolder/O/S $cpackage
-	NewDataFolder/O/S $cstructure
-	
-	SetDataFolder dfrSave	
+    Struct experiment &filo
+    DFREF dfrSave = GetDataFolderDFR()
+    
+    SetDataFolder root:
+    NewDataFolder/O/S Packages
+    NewDataFolder/O/S $cpackage
+    NewDataFolder/O/S $cstructure
+    
+    SetDataFolder dfrSave    
 End
 
 static Function StructureUpdate(filo)
-	Struct experiment &filo
+    Struct experiment &filo
 
     StructureInitGlobalVariables()
 End
 
 static Function StructureInitGlobalVariables()
-	DFREF dfrStructure = $StructureDF()
+    DFREF dfrStructure = $StructureDF()
 
     createSVAR("strFileList", dfr = dfrStructure)
     createSVAR("strFileExtension", dfr = dfrStructure)
@@ -54,15 +54,15 @@ static Function StructureInitGlobalVariables()
 End 
 
 Function structureLoad(filo)
-	Struct experiment &filo
-	Variable SetDefault = 0
-	
-	if(!StructureIsInit())
+    Struct experiment &filo
+    Variable SetDefault = 0
+    
+    if(!StructureIsInit())
         StructureInitDF(filo)
         StructureInitGlobalVariables()
     endif
 
-	DFREF filo.dfrStructure = $StructureDF()
+    DFREF filo.dfrStructure = $StructureDF()
     if (DataFolderRefStatus(filo.dfrStructure) == 0)
         print "FILO#structureLoad: Unexpected Behaviour." // ASSERT
     endif
@@ -82,13 +82,13 @@ Function structureLoad(filo)
 End
 
 Function structureSave(filo)
-	Struct experiment &filo
-	
-	DFREF dfrStructure = $StructureDF()
+    Struct experiment &filo
+    
+    DFREF dfrStructure = $StructureDF()
 
-    saveSVAR("strFolder",        filo.strFolder,        dfr = dfrStructure)	
-    saveSVAR("strFileList",      filo.strFileList,      dfr = dfrStructure)	
-    saveSVAR("strFileExtension", filo.strFileExtension, dfr = dfrStructure)	
-	
-    saveNVAR("numVersion", filo.numVersion, dfr = dfrStructure)	
+    saveSVAR("strFolder",        filo.strFolder,        dfr = dfrStructure)    
+    saveSVAR("strFileList",      filo.strFileList,      dfr = dfrStructure)    
+    saveSVAR("strFileExtension", filo.strFileExtension, dfr = dfrStructure)    
+    
+    saveNVAR("numVersion", filo.numVersion, dfr = dfrStructure)    
 End
