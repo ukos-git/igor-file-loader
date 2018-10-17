@@ -3,36 +3,36 @@
 #pragma IndependentModule = FILO
 
 Function/S popUpChooseDirectory(strPath)
-    String strPath
+	String strPath
 
-    NewPath/O/Q path, strPath
-    PathInfo/S path
+	NewPath/O/Q path, strPath
+	PathInfo/S path
 
-    NewPath/M="choose Folder"/O/Q path
-    PathInfo path
-    strPath = S_path
+	NewPath/M="choose Folder"/O/Q path
+	PathInfo path
+	strPath = S_path
 
-    GetFileFolderInfo/Q/Z=1 strPath
-    if(!V_isFolder)
-        strPath = ""
-    endif
+	GetFileFolderInfo/Q/Z=1 strPath
+	if(!V_isFolder)
+		strPath = ""
+	endif
 
-    return strPath
+	return strPath
 End
 
 // gets a list of files with the matching extension from a folder
 // returns full paths.
 Function/S pathActionGetFileList(strFolder, strExtension)
-    String strFolder, strExtension
+	String strFolder, strExtension
 
-    String listFiles
+	String listFiles
 
-    NewPath/Q/O path strFolder
-    listFiles = IndexedFile(path, -1, strExtension)
-    listFiles = SortList(listFiles,";",16)
-    listFiles = AddPrefixToListItems(strFolder, listFiles)
+	NewPath/Q/O path strFolder
+	listFiles = IndexedFile(path, -1, strExtension)
+	listFiles = SortList(listFiles,";",16)
+	listFiles = AddPrefixToListItems(strFolder, listFiles)
 
-    return listFiles
+	return listFiles
 End
 
 // adds a given string to a semicolon separated list
@@ -62,108 +62,108 @@ Function/S UniqueList(list)
 End
 
 Function createSVAR(name, [dfr, set, init])
-    String name
-    DFREF dfr
-    String set, init
+	String name
+	DFREF dfr
+	String set, init
 
-    if(ParamIsDefault(dfr))
-        dfr = GetDataFolderDFR()
-    endif
+	if(ParamIsDefault(dfr))
+		dfr = GetDataFolderDFR()
+	endif
 
-    SVAR/Z/SDFR=dfr var = $name
-    if(!SVAR_EXISTS(var))
-        if(ParamIsDefault(init))
-            String/G dfr:$name = ""
-        else
-            String/G dfr:$name = init
-        endif
-    endif
+	SVAR/Z/SDFR=dfr var = $name
+	if(!SVAR_EXISTS(var))
+		if(ParamIsDefault(init))
+			String/G dfr:$name = ""
+		else
+			String/G dfr:$name = init
+		endif
+	endif
 
-    if(!ParamIsDefault(set))
-        SVAR/SDFR=dfr var = $name
-        var = set
-    endif
+	if(!ParamIsDefault(set))
+		SVAR/SDFR=dfr var = $name
+		var = set
+	endif
 End
 
 Function/S loadSVAR(name, [dfr])
-    String name
-    DFREF dfr
+	String name
+	DFREF dfr
    
-    if(ParamIsDefault(dfr))
-        dfr = GetDataFolderDFR()
-    endif
+	if(ParamIsDefault(dfr))
+		dfr = GetDataFolderDFR()
+	endif
 
-    SVAR/Z/SDFR=dfr var = $name
+	SVAR/Z/SDFR=dfr var = $name
 
-    return var
+	return var
 End
 
 Function saveSVAR(name, set, [dfr])
-    String name, set
-    DFREF dfr
+	String name, set
+	DFREF dfr
    
-    if(ParamIsDefault(dfr))
-        dfr = GetDataFolderDFR()
-    endif
+	if(ParamIsDefault(dfr))
+		dfr = GetDataFolderDFR()
+	endif
 
-    SVAR/Z/SDFR=dfr var = $name
-    if(!SVAR_EXISTS(var))
-        return 0
-    endif
+	SVAR/Z/SDFR=dfr var = $name
+	if(!SVAR_EXISTS(var))
+		return 0
+	endif
 
-    var = set
+	var = set
 
-    return 1
+	return 1
 End
 
 Function loadNVAR(name, [dfr])
-    String name
-    DFREF dfr
+	String name
+	DFREF dfr
    
-    if(ParamIsDefault(dfr))
-        dfr = GetDataFolderDFR()
-    endif
+	if(ParamIsDefault(dfr))
+		dfr = GetDataFolderDFR()
+	endif
 
-    NVAR/Z/SDFR=dfr var = $name
+	NVAR/Z/SDFR=dfr var = $name
 
-    return var
+	return var
 End
 
 Function saveNVAR(name, set, [dfr])
-    String name
-    Variable set
-    DFREF dfr
+	String name
+	Variable set
+	DFREF dfr
    
-    if(ParamIsDefault(dfr))
-        dfr = GetDataFolderDFR()
-    endif
+	if(ParamIsDefault(dfr))
+		dfr = GetDataFolderDFR()
+	endif
 
-    NVAR/Z/SDFR=dfr var = $name
-    if(!NVAR_EXISTS(var))
-        return 0
-    endif
+	NVAR/Z/SDFR=dfr var = $name
+	if(!NVAR_EXISTS(var))
+		return 0
+	endif
 
-    var = set
+	var = set
 
-    return 1
+	return 1
 End
 
 Function createNVAR(name, [dfr, set])
-    String name
-    DFREF dfr
-    Variable set
+	String name
+	DFREF dfr
+	Variable set
 
-    if(ParamIsDefault(dfr))
-        dfr = GetDataFolderDFR()
-    endif
+	if(ParamIsDefault(dfr))
+		dfr = GetDataFolderDFR()
+	endif
 
-    NVAR/Z/SDFR=dfr var = $name
-    if(!NVAR_EXISTS(var))
-        Variable/G dfr:$name
-    endif
+	NVAR/Z/SDFR=dfr var = $name
+	if(!NVAR_EXISTS(var))
+		Variable/G dfr:$name
+	endif
 
-    if(!ParamIsDefault(set))
-        NVAR/SDFR=dfr var = $name
-        var = set
-    endif
+	if(!ParamIsDefault(set))
+		NVAR/SDFR=dfr var = $name
+		var = set
+	endif
 End

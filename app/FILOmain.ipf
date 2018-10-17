@@ -7,48 +7,48 @@
 // #include "FILOprefs"
 // #include "FILOtools"
 
-strConstant cpackage    = "FILO"
-Constant    cversion = 0002
-StrConstant cpath    = "C:"
+strConstant cpackage	= "FILO"
+Constant	cversion = 0002
+StrConstant cpath	= "C:"
 
 Function load([fileType, packageID, appendToList])
-    String fileType
-    Variable packageID, appendToList
+	String fileType
+	Variable packageID, appendToList
 
-    String fullPath, files
+	String fullPath, files
 
-    STRUCT package package
-    STRUCT experiment filo
+	STRUCT package package
+	STRUCT experiment filo
 
-    if(ParamIsDefault(packageID))
-        packageID = 0
-    endif
-    if(ParamIsDefault(fileType))
-        fileType = ".ibw"
-    endif
+	if(ParamIsDefault(packageID))
+		packageID = 0
+	endif
+	if(ParamIsDefault(fileType))
+		fileType = ".ibw"
+	endif
 	if(ParamIsDefault(appendToList))
 		appendToList = 0
 	endif
 
-    LoadPackagePrefs(package, id = packageID)
+	LoadPackagePrefs(package, id = packageID)
 
-    fullPath = popUpChooseDirectory(package.path)
-    files = pathActionGetFileList(fullPath, fileType)
-    
-    structureLoad(filo)
+	fullPath = popUpChooseDirectory(package.path)
+	files = pathActionGetFileList(fullPath, fileType)
+	
+	structureLoad(filo)
 
-    filo.strFolder   = fullPath
-    if(appendToList)
+	filo.strFolder   = fullPath
+	if(appendToList)
 		filo.strFileList += files
 		filo.strFileList = UniqueList(filo.strFileList)
-    else
+	else
 		filo.strFileList = files
 	 endif
-    filo.strFileExtension = fileType
+	filo.strFileExtension = fileType
 
-    structureSave(filo)
+	structureSave(filo)
 
-    package.path = filo.strFolder    
+	package.path = filo.strFolder	
 
-    SavePackagePrefs(package, id = packageID)
+	SavePackagePrefs(package, id = packageID)
 End
