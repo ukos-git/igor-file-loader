@@ -8,12 +8,12 @@
 // #include "FILOtools"
 
 strConstant cpackage    = "FILO"
-Constant    cversion = 0001
+Constant    cversion = 0002
 StrConstant cpath    = "C:"
 
-Function load([fileType, packageID])
+Function load([fileType, packageID, appendToList])
     String fileType
-    Variable packageID
+    Variable packageID, appendToList
 
     String fullPath, files
 
@@ -26,6 +26,9 @@ Function load([fileType, packageID])
     if(ParamIsDefault(fileType))
         fileType = ".ibw"
     endif
+	if(ParamIsDefault(appendToList))
+		appendToList = 0
+	endif
 
     LoadPackagePrefs(package, id = packageID)
 
@@ -35,7 +38,12 @@ Function load([fileType, packageID])
     structureLoad(filo)
 
     filo.strFolder   = fullPath
-    filo.strFileList = files
+    if(appendToList)
+		filo.strFileList += files
+		filo.strFileList = UniqueList(filo.strFileList)
+    else
+		filo.strFileList = files
+	 endif
     filo.strFileExtension = fileType
 
     structureSave(filo)
