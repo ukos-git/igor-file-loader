@@ -8,7 +8,7 @@
 // #include "FILOtools"
 
 strConstant cpackage	= "FILO"
-Constant	cversion = 0002
+Constant	cversion = 0003
 StrConstant cpath	= "C:"
 
 Function load([fileType, packageID, appendToList])
