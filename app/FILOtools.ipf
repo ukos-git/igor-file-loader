@@ -50,6 +50,29 @@ Function/S AddPrefixToListItems(prefix, list)
 	return outList
 End
 
+// Remove a given string from a semicolon separated list
+Function/S RemovePrefixFromListItems(prefix, list)
+	String prefix, list
+
+	Variable i, numItems
+	string item
+	String outList = ""
+
+	if(strlen(prefix) == 0)
+		return list
+	endif
+	
+	numItems = ItemsInList(list)
+	for(i = 0; i < numItems; i += 1)
+		item = StringFromList(i, list)
+		if(!cmpstr(item[0, strlen(prefix) - 1], prefix))
+			item = item[strlen(prefix), inf]
+		endif
+		outList = AddListItem(item, outList, ";", i)
+	endfor
+
+	return outList
+End
 
 Function/S UniqueList(list)
 	String list

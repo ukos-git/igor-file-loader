@@ -43,27 +43,11 @@ End
 static Function StructureUpdate(filo)
 	Struct experiment &filo
 
-	string strPath
-
 	if(filo.numVersion == 0001)
 		// 0001 --> 0002: changed to full path
 		filo.strFileList = AddPrefixToListItems(filo.strFolder, filo.strFileList)
 	endif
-	if(filo.numVersion < 0003)
-		// 0002 --> 0003: replace drive d
-		strPath = filo.strFolder
-		GetFileFolderInfo/Q/Z=1 strPath
-		if(!V_isFolder)
-			if(!cmpstr(strPath[0], "D"))
-				strPath = "W:data" + strPath[1, inf]
-				GetFileFolderInfo/Q/Z=1 strPath
-				if(!V_isFolder)
-					strPath = filo.strFolder
-				endif
-			endif
-		endif
-		filo.strFolder = strPath
-	endif
+
 	filo.numVersion = cVersion
 	structureSave(filo)
 End
