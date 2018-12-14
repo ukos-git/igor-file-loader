@@ -15,7 +15,7 @@ Function load([fileType, packageID, appendToList])
 	String fileType
 	Variable packageID, appendToList
 
-	String fullPath, files
+	String strPath, files
 
 	STRUCT package package
 	STRUCT experiment filo
@@ -31,24 +31,32 @@ Function load([fileType, packageID, appendToList])
 	endif
 
 	LoadPackagePrefs(package, id = packageID)
+	StructureLoad(filo)
 
-	fullPath = popUpChooseDirectory(package.path)
-	files = pathActionGetFileList(fullPath, fileType)
-	
-	structureLoad(filo)
+	// get path
+	strPath = filo.strFolder
+	GetFileFolderInfo/Q/Z=1 strPath
+	if(!V_isFolder)
+		strPath = package.path
+	endif
+	strPath = popUpChooseDirectory(strPath)
+	GetFileFolderInfo/Q/Z=1 strPath
+	if(!V_isFolder)
+		Abort "Path does not exist"
+	endif
+	filo.strFolder = strPath
+	package.path = strPath
+	SavePackagePrefs(package, id = packageID)
 
-	filo.strFolder   = fullPath
+	// get files
+	files = pathActionGetFileList(strPath, fileType)
 	if(appendToList)
 		filo.strFileList += files
 		filo.strFileList = UniqueList(filo.strFileList)
 	else
 		filo.strFileList = files
-	 endif
+	endif
 	filo.strFileExtension = fileType
 
 	structureSave(filo)
-
-	package.path = filo.strFolder	
-
-	SavePackagePrefs(package, id = packageID)
 End
