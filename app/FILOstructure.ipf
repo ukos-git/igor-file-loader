@@ -98,10 +98,10 @@ Function structureLoad(filo)
 
 	StructureInitGlobalVariables(numVersion)
 
-	filo.strFolder		= loadSVAR("strFolder",		dfr = filo.dfrStructure)
-	filo.strFileList	  = loadSVAR("strFileList",	  dfr = filo.dfrStructure)
+	filo.strFolder        = loadSVAR("strFolder", dfr = filo.dfrStructure)
+	filo.strFileList      = loadSVAR("strFileList", dfr = filo.dfrStructure)
 	filo.strFileExtension = loadSVAR("strFileExtension", dfr = filo.dfrStructure)
-	filo.numVersion = loadNVAR("numVersion", dfr = filo.dfrStructure)
+	filo.numVersion       = loadNVAR("numVersion", dfr = filo.dfrStructure)
 
 	if(filo.numVersion < cversion)
 		print "FILO#structureLoad: Version Change detected."
