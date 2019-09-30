@@ -2,11 +2,6 @@
 #pragma rtGlobals = 3
 #pragma IndependentModule = FILO
 
-// require these files
-// #include "FILOstructure"
-// #include "FILOprefs"
-// #include "FILOtools"
-
 strConstant cpackage	= "FILO"
 Constant	cversion = 0003
 StrConstant cpath	= "C:"
